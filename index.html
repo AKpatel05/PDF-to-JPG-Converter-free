@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PDF to JPG Converter - High Quality Image Conversion</title>
     <meta name="description" content="Convert PDF pages to high-quality JPG images online. Free tool with batch processing, image quality control and instant download.">
 
@@ -44,7 +45,8 @@
         .drop-zone {
             border: 3px dashed var(--primary-color);
             border-radius: 15px;
-            padding: 3rem;
+            padding: 1.5rem;
+            font-size: 0.9rem;
             text-align: center;
             background: white;
             transition: all 0.3s;
@@ -54,8 +56,8 @@
          body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             max-width: 1000px;
-            margin: 2rem auto;
-            padding: 20px;
+            margin: 1rem auto;
+            padding: 10px;
             background: #f8f9fa;
         }
 
@@ -94,7 +96,7 @@
         #previewContainer {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 15px;
+            gap: 10px;
             margin: 30px 0;
         }
 
@@ -107,7 +109,8 @@
 
         .controls {
             display: flex;
-            gap: 15px;
+            flex-direction: column;
+            gap: 10px;
             margin: 20px 0;
             align-items: center;
         }
@@ -125,14 +128,23 @@
         button:hover {
             background: var(--hover-color);
         }
-
-        input[type="range"] {
-            width: 200px;
+        button,[type=":in-range"] { 
+            min-width: 120px; 
+            touch-action: manipulation;
+            padding: 15px 30px;
         }
-
+        input[type="range"] {
+          width: 100%;
+          max-width: 250px;
+        } 
         .page-selector {
             margin: 10px 0;
         }
+         @media (max-width: 600px) {
+            body { padding: 10px; }
+            .drop-zone { padding: 1rem; }
+            .controls { flex-direction: column; }
+            }
     </style>
 </head>
     
@@ -168,6 +180,12 @@
             } catch(err) {
                 alert('Error: Invalid PDF file or scanned PDF detected!');
             }
+        }
+        if(/Android|webOS|iPhone|iPad/i.test(navigator.userAgent)) {
+          document.getElementById('dropZone').innerHTML = `
+            <div style="font-size: 1.2rem;">📱 Tap to Upload PDF</div>
+            <div style="color: #666;">(Max 10 pages)</div>
+        ` ;
         }
 
         async function renderThumbnails() {
@@ -265,7 +283,7 @@
             }
         });
     </script>
-    <h1>📄→🖼️ PDF to JPG Converter</h1>
+    <h1><span role="img" aria-label="PDF File">📄</span>→<span role="img" aria-label="Image">🖼️</span> PDF to JPG Converter</h1>
 
     <!-- यह नया सेक्शन जोड़ें -->
     <section class="seo-content">
